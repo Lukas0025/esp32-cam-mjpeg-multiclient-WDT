@@ -1,4 +1,4 @@
-# ESP32 MJPEG Multiclient Streaming Server
+# ESP32 MJPEG Multiclient Streaming Server with WatchDog
 
 This is a simple MJPEG streaming webserver implemented for AI-Thinker ESP32-CAM or ESP-EYE modules with WatchDog. 
 
