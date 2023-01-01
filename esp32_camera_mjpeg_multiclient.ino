@@ -1,6 +1,6 @@
 /*
 
-  This is a simple MJPEG streaming webserver implemented for AI-Thinker ESP32-CAM
+  This is a simple MJPEG streaming webserver implemented for AI-Thinker ESP32-CAM with WatchDog
   and ESP-EYE modules.
   This is tested to work with VLC and Blynk video widget and can support up to 10
   simultaneously connected streaming clients.
@@ -33,6 +33,10 @@
 #include <esp_wifi.h>
 #include <esp_sleep.h>
 #include <driver/rtc_io.h>
+#include <esp_task_wdt.h>
+
+//3 seconds WDT
+#define WDT_TIMEOUT 3
 
 // Select camera model
 //#define CAMERA_MODEL_WROVER_KIT
@@ -450,7 +454,9 @@ void setup()
   Serial.print("Stream Link: http://");
   Serial.print(ip);
   Serial.println("/mjpeg/1");
-
+  
+  esp_task_wdt_init(WDT_TIMEOUT, true); //enable panic so ESP32 restarts
+  esp_task_wdt_add(NULL); //add current thread to WDT watch
 
   // Start mainstreaming RTOS task
   xTaskCreatePinnedToCore(
@@ -466,4 +472,5 @@ void setup()
 
 void loop() {
   vTaskDelay(1000);
+  if (millis() < 43200000) esp_task_wdt_reset(); // reboot every 12h
 }
