@@ -5,6 +5,7 @@ This is a simple MJPEG streaming webserver implemented for AI-Thinker ESP32-CAM 
 This is tested to work with **VLC** and **Blynk** video widget. 
 
 **WatchDog check esp every 3s and if not responding do reboot**
+
 **Auto reboot trigers every 12h**
 
 **This version uses FreeRTOS tasks to enable streaming to up to 10 connected clients**
